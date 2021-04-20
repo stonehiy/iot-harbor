@@ -1,0 +1,23 @@
+server:
+  port: 28080
+
+
+iot:
+  mqtt:
+    server:
+      enable: true
+      host: 127.0.0.1
+      port: 1884
+      log: false
+      protocol: ws_mqtt
+      heart: 100000
+      ssl: false
+
+    client:
+      enable: false
+
+
+  #设备校验：实现AuthencationSession接口注入容器即可
+  #异常处理：实现ExceptorAcceptor接口注入容器即可
+  #保留消息处理：实现RsocketMessageHandler接口注入容器即可，默认使用内存。
+

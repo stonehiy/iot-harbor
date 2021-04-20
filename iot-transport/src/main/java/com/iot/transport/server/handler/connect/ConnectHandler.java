@@ -47,7 +47,7 @@ public class ConnectHandler implements DirectHandler {
                         break;
                     }
                 case DISCONNECT:
-                    serverConfig.getChannelManager().removeConnections(connection);
+//                    serverConfig.getChannelManager().removeConnections(connection);
                     connection.dispose();
                     break;
             }
@@ -60,7 +60,8 @@ public class ConnectHandler implements DirectHandler {
 
     private  void  connectSuccess(TransportConnection connection, RsocketChannelManager channelManager, String deviceId, int keepalived){
         connection.getConnection().onReadIdle(keepalived*2000, () -> connection.getConnection().dispose()); // 心跳超时关闭
-        connection.getConnection().channel().attr(AttributeKeys.keepalived).set(keepalived); // 设置device Id
+        connection.getConnection().channel().attr(AttributeKeys.device_id).set(deviceId);// 设置device Id
+        connection.getConnection().channel().attr(AttributeKeys.keepalived).set(keepalived);
         channelManager.addDeviceId(deviceId,connection);
         Optional.ofNullable(connection.getConnection().channel().attr(AttributeKeys.closeConnection)) // 取消关闭连接
                 .map(Attribute::get)

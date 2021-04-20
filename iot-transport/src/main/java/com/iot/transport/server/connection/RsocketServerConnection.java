@@ -83,10 +83,14 @@ public class RsocketServerConnection implements RsocketServerSession {
                             })));
             channelManager.removeConnections(connection); // 删除链接
             connection.getTopics().forEach(topic -> topicManager.deleteTopicConnection(topic, connection)); // 删除topic订阅
+//            Attribute<String> attr = connection.getConnection().channel().attr(AttributeKeys.device_id);
+//            String s = attr.get();
+//            channelManager.removeDeviceId(s);
             Optional.ofNullable(connection.getConnection().channel().attr(AttributeKeys.device_id))
                     .map(Attribute::get)
                     .ifPresent(channelManager::removeDeviceId); // 设置device Id
             connection.destory();
+
         });
         inbound.receiveObject().cast(MqttMessage.class)
                 .subscribe(message -> messageRouter.handler(message, connection));

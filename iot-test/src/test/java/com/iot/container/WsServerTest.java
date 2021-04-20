@@ -13,7 +13,7 @@ public class WsServerTest {
     @Test
     public void testServer() throws InterruptedException {
         CountDownLatch latch = new CountDownLatch(1);
-      TransportServer.create("192.168.100.237",1884)
+      TransportServer.create("127.0.0.1",11884)
               .auth((s,p)->true)
               .heart(100000)
               .protocol(ProtocolType.WS_MQTT)
@@ -25,6 +25,8 @@ public class WsServerTest {
               .start()
               .subscribe();
         latch.await();
+
+
 
 
 
